@@ -51,7 +51,11 @@
   <div class="swiper">
     <div class="swiper-wrapper">
       {#each slides as slide, i}
-        <div class="swiper-slide" style="background-image: url({slide.image})" data-year={slide.year}>
+        <div class="swiper-slide" data-year={slide.year}>
+          {#if slide.image}
+            <div class="slide-bg-blur" style="background-image: url('{slide.image}')"></div>
+            <img src={slide.image} alt={slide.title} class="slide-img" />
+          {/if}
           {#if activeIndex === i}
             <div class="slide-content">
               <span class="slide-year">{slide.year}</span>
@@ -82,12 +86,27 @@
 .swiper-slide {
   width: 100vw;
   height: 100vh;
-  background-size: cover;
-  background-position: center center;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  overflow: hidden;
+  background: #222;
+}
+.slide-bg-blur {
+  position: absolute;
+  left: 0; top: 0; width: 100%; height: 100%;
+  background-size: cover;
+  background-position: center;
+  filter: blur(18px) brightness(0.7);
+  z-index: 0;
+}
+.slide-img {
+  position: absolute;
+  left: 0; top: 0; width: 100%; height: 100%;
+  object-fit: contain;
+  z-index: 1;
+  pointer-events: none;
 }
 .slide-content {
   position: absolute;
