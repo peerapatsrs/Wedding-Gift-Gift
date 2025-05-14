@@ -4,7 +4,6 @@
 	"devCommand": "npm run dev",
 	"installCommand": "npm install --force",
 	"framework": "sveltekit",
-	"nodeVersion": "20.x",
 	"builds": [
 		{
 			"src": "package.json",
