@@ -12,37 +12,39 @@
   let swiper: any;
   let activeIndex = 0;
 
-  onMount(() => {
-    swiper = new Swiper('.swiper', {
-      modules: [Navigation, Pagination],
-      direction: 'vertical',
-      loop: false,
-      speed: 900,
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-        renderBullet: (index, className) => {
-          const year = slides[index]?.year || '';
-          return `<span class="${className}" style="color:#ffd700;font-style:italic;font-weight:700;"><span class="slide-year" style="color:#ffd700;font-style:italic;font-weight:700;">${year}</span></span>`;
+  $: if (typeof window !== 'undefined') {
+    onMount(() => {
+      swiper = new Swiper('.swiper', {
+        modules: [Navigation, Pagination],
+        direction: 'vertical',
+        loop: false,
+        speed: 900,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+          renderBullet: (index, className) => {
+            const year = slides[index]?.year || '';
+            return `<span class="${className}" style="color:#ffd700;font-style:italic;font-weight:700;"><span class="slide-year" style="color:#ffd700;font-style:italic;font-weight:700;">${year}</span></span>`;
+          },
         },
-      },
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-      on: {
-        slideChange: () => {
-          activeIndex = swiper.activeIndex;
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+        on: {
+          slideChange: () => {
+            activeIndex = swiper.activeIndex;
+          }
+        },
+        breakpoints: {
+          900: {
+            direction: 'horizontal',
+          }
         }
-      },
-      breakpoints: {
-        900: {
-          direction: 'horizontal',
-        }
-      }
+      });
+      activeIndex = swiper.activeIndex;
     });
-    activeIndex = swiper.activeIndex;
-  });
+  }
 </script>
 
 <div class="timeline-slider">
@@ -248,51 +250,83 @@
     width: 100vw !important;
     max-width: 100vw;
     flex-direction: row !important;
-    justify-content: center !important;
-    align-items: center !important;
-    font-size: 16px;
-    background: rgba(0,0,0,0.18);
+    justify-content: center;
+    padding: 10px;
+    background: rgba(0,0,0,0.5);
     border-radius: 0;
-    box-shadow: none;
-    gap: 50px;
-    z-index: 10;
   }
-  .slide-content {
-    bottom: 60px;
-    top: auto;
+
+  .swiper-pagination-bullet {
+    font-size: 16px;
+    height: 24px;
+    min-width: 40px;
   }
-  .slide-title {
+
+  .swiper-pagination-bullet-active {
     font-size: 18px;
   }
-  .slide-year {
+
+  .slide-content {
+    right: 0;
+    left: 0;
+    top: auto;
+    bottom: 80px;
+    transform: none;
+    max-width: 100%;
+    padding: 20px;
+    border-radius: 0;
+    background: rgba(0,0,0,0.7);
+  }
+
+  .slide-title {
+    font-size: 32px;
+  }
+
+  .slide-text {
+    font-size: 18px;
+  }
+
+  .slide-content .slide-year {
+    font-size: 32px;
+  }
+
+  .swiper-button-prev {
+    left: 20px;
+    right: auto;
+    bottom: 20px;
+    top: auto;
+    transform: none;
+  }
+  .swiper-button-next {
+    right: 20px;
+    left: auto;
+    bottom: 20px;
+    top: auto;
+    transform: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .slide-title {
+    font-size: 24px;
+  }
+
+  .slide-text {
     font-size: 16px;
   }
-  .slide-text {
-    font-size: 12px;
+
+  .slide-content .slide-year {
+    font-size: 24px;
   }
+
   .swiper-pagination-bullet {
-    min-width: 24px;
-    height: 50px;
-    font-size: 11px;
-    padding: 0 2px 0 0;
+    font-size: 14px;
+    height: 20px;
+    min-width: 32px;
   }
+
   .swiper-pagination-bullet-active {
-    font-size: 13px;
-  }
-  .swiper-button-prev,
-  .swiper-button-next {
-    right: auto;
-    left: 8vw;
-    top: auto;
-    bottom: 60px;
-    transform: none;
-    width: 32px;
-    height: 32px;
-    background-size: 24px 24px !important;
-  }
-  .swiper-button-next {
-    left: auto;
-    right: 8vw;
+    font-size: 16px;
   }
 }
 </style> 
