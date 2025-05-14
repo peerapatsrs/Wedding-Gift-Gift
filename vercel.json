@@ -4,12 +4,6 @@
 	"devCommand": "npm run dev",
 	"installCommand": "npm install --force",
 	"framework": "sveltekit",
-	"builds": [
-		{
-			"src": "package.json",
-			"use": "@vercel/node"
-		}
-	],
 	"routes": [
 		{
 			"src": "/(.*)",
